@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Runn - Prototype</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="game-shell">
+      <canvas id="game" width="960" height="540" aria-label="Runn first-person maze game"></canvas>
+
+      <section class="hud" aria-label="Game status">
+        <div>
+          <span class="label">Level</span>
+          <strong id="levelName">1</strong>
+        </div>
+        <div>
+          <span class="label">Map Views</span>
+          <strong id="mapViews">2</strong>
+        </div>
+        <div>
+          <span class="label">State</span>
+          <strong id="stateText">Run</strong>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="Game controls">
+        <button id="mapButton" type="button" title="Show map">Map</button>
+        <button id="hideButton" type="button" title="Hide when near a bench">Hide</button>
+        <button id="restartButton" type="button" title="Restart level">Restart</button>
+      </section>
+
+      <section class="touch-pad" aria-label="Touch movement controls">
+        <button data-move="forward" type="button">▲</button>
+        <div>
+          <button data-turn="left" type="button">◀</button>
+          <button data-move="back" type="button">▼</button>
+          <button data-turn="right" type="button">▶</button>
+        </div>
+      </section>
+
+      <aside id="message" class="message">
+        <h1>Runn</h1>
+        <p>Escape the maze. The ogre is slower, but it sees enough.</p>
+        <button id="startButton" type="button">Start</button>
+      </aside>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>
