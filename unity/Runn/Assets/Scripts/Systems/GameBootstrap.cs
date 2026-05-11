@@ -250,6 +250,7 @@ namespace Runn.Systems
             cam.farClipPlane = 80f;
             cam.backgroundColor = new Color(0.02f, 0.02f, 0.04f);
             cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.depth = 0f;
             camGo.AddComponent<AudioListener>();
             return cam;
         }
@@ -259,6 +260,7 @@ namespace Runn.Systems
             var canvasGo = new GameObject("UICanvas");
             var canvas = canvasGo.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 100;
             var scaler = canvasGo.AddComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1080, 1920);
@@ -324,7 +326,8 @@ namespace Runn.Systems
             var menuDim = menuGo.AddComponent<Image>();
             menuDim.color = new Color(0, 0, 0, 0.82f);
             mainMenu = menuGo.AddComponent<MainMenuScreen>();
-            MakeText(menuGo.transform, "Title", "OgreRunn", new Vector2(0.5f, 0.72f), Vector2.zero, TextAnchor.MiddleCenter, 96);
+            var title = MakeText(menuGo.transform, "Title", "OgreRunn", new Vector2(0.5f, 0.72f), Vector2.zero, TextAnchor.MiddleCenter, 96);
+            title.color = new Color(1f, 0.92f, 0.7f);
             mainMenu.PlaceholderText = MakeText(menuGo.transform, "Placeholder", "", new Vector2(0.5f, 0.32f), Vector2.zero, TextAnchor.MiddleCenter, 42);
             mainMenu.PlayButton = MakeButton(menuGo.transform, "PlayBtn", "PLAY", new Vector2(0.5f, 0.55f), Vector2.zero, new Vector2(420, 140));
             mainMenu.LevelSelectButton = MakeButton(menuGo.transform, "LevelSelectBtn", "LEVEL SELECT", new Vector2(0.5f, 0.43f), Vector2.zero, new Vector2(420, 120));
@@ -411,6 +414,7 @@ namespace Runn.Systems
         private static Text MakeText(Transform parent, string name, string content, Vector2 anchor, Vector2 anchoredPos, TextAnchor align, int fontSize)
         {
             var go = MakeUIChild(parent, name);
+            go.layer = 5;
             var rt = go.GetComponent<RectTransform>();
             rt.anchorMin = rt.anchorMax = rt.pivot = anchor;
             rt.anchoredPosition = anchoredPos;
@@ -427,6 +431,7 @@ namespace Runn.Systems
         private static Button MakeButton(Transform parent, string name, string label, Vector2 anchor, Vector2 anchoredPos, Vector2 size)
         {
             var go = MakeUIChild(parent, name);
+            go.layer = 5;
             var rt = go.GetComponent<RectTransform>();
             rt.anchorMin = rt.anchorMax = rt.pivot = anchor;
             rt.anchoredPosition = anchoredPos;

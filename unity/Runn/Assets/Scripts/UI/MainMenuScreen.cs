@@ -22,6 +22,7 @@ namespace Runn.UI
         public void Show()
         {
             gameObject.SetActive(true);
+            Debug.Log("[Runn] Main menu shown.");
         }
 
         public void Hide()

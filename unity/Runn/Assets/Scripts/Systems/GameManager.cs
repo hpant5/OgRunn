@@ -78,6 +78,7 @@ namespace Runn.Systems
             DeathScreen?.gameObject.SetActive(false);
             LevelCompleteScreen?.gameObject.SetActive(false);
             MainMenu?.Show();
+            Hud?.ShowMessage("OgreRunn ready");
         }
 
         public void TogglePause()
