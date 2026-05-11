@@ -111,7 +111,19 @@ namespace Runn.Systems
 
         private Material MakeMat(Color c)
         {
-            var shader = Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard");
+            var shader = Shader.Find("Universal Render Pipeline/Lit")
+                ?? Shader.Find("Universal Render Pipeline/Unlit")
+                ?? Shader.Find("Standard")
+                ?? Shader.Find("Unlit/Color")
+                ?? Shader.Find("Sprites/Default")
+                ?? Shader.Find("Legacy Shaders/Diffuse")
+                ?? Shader.Find("Mobile/Diffuse");
+            if (shader == null)
+            {
+                Debug.LogError("[Runn] No compatible built-in shader found. Using Unity primitive defaults.");
+                return null;
+            }
+
             var m = new Material(shader);
             if (m.HasProperty("_BaseColor")) m.SetColor("_BaseColor", c);
             if (m.HasProperty("_Color")) m.SetColor("_Color", c);
@@ -146,7 +158,7 @@ namespace Runn.Systems
             var body = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             body.transform.SetParent(go.transform, false);
             body.transform.localPosition = new Vector3(0f, 1f, 0f);
-            body.GetComponent<Renderer>().sharedMaterial = PlayerMaterial;
+            if (PlayerMaterial != null) body.GetComponent<Renderer>().sharedMaterial = PlayerMaterial;
             Destroy(body.GetComponent<Collider>());
             body.layer = IgnoreRaycastLayer;
 
@@ -154,7 +166,7 @@ namespace Runn.Systems
             nose.transform.SetParent(go.transform, false);
             nose.transform.localPosition = new Vector3(0f, 1.4f, 0.45f);
             nose.transform.localScale = new Vector3(0.2f, 0.2f, 0.4f);
-            nose.GetComponent<Renderer>().sharedMaterial = PlayerMaterial;
+            if (PlayerMaterial != null) nose.GetComponent<Renderer>().sharedMaterial = PlayerMaterial;
             Destroy(nose.GetComponent<Collider>());
             nose.layer = IgnoreRaycastLayer;
 
@@ -177,7 +189,7 @@ namespace Runn.Systems
             body.transform.SetParent(go.transform, false);
             body.transform.localPosition = new Vector3(0f, 1.2f, 0f);
             body.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-            body.GetComponent<Renderer>().sharedMaterial = OgreMaterial;
+            if (OgreMaterial != null) body.GetComponent<Renderer>().sharedMaterial = OgreMaterial;
             Destroy(body.GetComponent<Collider>());
             body.layer = IgnoreRaycastLayer;
 
@@ -185,7 +197,7 @@ namespace Runn.Systems
             eye.transform.SetParent(go.transform, false);
             eye.transform.localPosition = new Vector3(0f, 1.9f, 0.45f);
             eye.transform.localScale = new Vector3(0.25f, 0.25f, 0.4f);
-            eye.GetComponent<Renderer>().sharedMaterial = OgreMaterial;
+            if (OgreMaterial != null) eye.GetComponent<Renderer>().sharedMaterial = OgreMaterial;
             Destroy(eye.GetComponent<Collider>());
             eye.layer = IgnoreRaycastLayer;
 
@@ -211,7 +223,7 @@ namespace Runn.Systems
                 go.name = $"Bench_{b.x}_{b.y}";
                 go.transform.position = level.GridToWorld(b, 0.4f);
                 go.transform.localScale = new Vector3(LevelData.TileSize * 0.85f, 0.8f, LevelData.TileSize * 0.45f);
-                go.GetComponent<Renderer>().sharedMaterial = BenchMaterial;
+                if (BenchMaterial != null) go.GetComponent<Renderer>().sharedMaterial = BenchMaterial;
                 Destroy(go.GetComponent<Collider>());
                 var bench = go.AddComponent<Bench>();
                 bench.GridPos = b;
@@ -225,7 +237,7 @@ namespace Runn.Systems
             go.name = "ExitDoor";
             go.transform.position = level.GridToWorld(level.Exit, 1.5f);
             go.transform.localScale = new Vector3(LevelData.TileSize * 0.6f, 3f, LevelData.TileSize * 0.6f);
-            go.GetComponent<Renderer>().sharedMaterial = DoorMaterial;
+            if (DoorMaterial != null) go.GetComponent<Renderer>().sharedMaterial = DoorMaterial;
             Destroy(go.GetComponent<Collider>());
             var door = go.AddComponent<ExitDoor>();
             door.RequiresKey = requireKey;
