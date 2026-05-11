@@ -100,11 +100,11 @@ namespace Runn.Systems
 
         private void EnsureMaterials()
         {
-            if (WallMaterial == null) WallMaterial = MakeMat(new Color(0.2f, 0.2f, 0.22f));
-            if (FloorMaterial == null) FloorMaterial = MakeMat(new Color(0.32f, 0.32f, 0.34f));
-            if (PlayerMaterial == null) PlayerMaterial = MakeMat(new Color(0.85f, 0.85f, 0.9f));
-            if (OgreMaterial == null) OgreMaterial = MakeMat(new Color(0.55f, 0.15f, 0.15f));
-            if (BenchMaterial == null) BenchMaterial = MakeMat(new Color(0.6f, 0.45f, 0.25f));
+            if (WallMaterial == null) WallMaterial = MakeMat(new Color(0.38f, 0.42f, 0.52f));
+            if (FloorMaterial == null) FloorMaterial = MakeMat(new Color(0.16f, 0.17f, 0.22f));
+            if (PlayerMaterial == null) PlayerMaterial = MakeMat(new Color(0.92f, 0.94f, 1f));
+            if (OgreMaterial == null) OgreMaterial = MakeMat(new Color(0.75f, 0.18f, 0.16f));
+            if (BenchMaterial == null) BenchMaterial = MakeMat(new Color(0.78f, 0.55f, 0.28f));
             if (KeyMaterial == null) KeyMaterial = MakeMat(new Color(0.3f, 0.85f, 0.95f));
             if (DoorMaterial == null) DoorMaterial = MakeMat(new Color(0.3f, 0.85f, 0.4f));
         }
@@ -137,10 +137,10 @@ namespace Runn.Systems
             var lightGo = new GameObject("DirectionalLight");
             var l = lightGo.AddComponent<Light>();
             l.type = LightType.Directional;
-            l.color = new Color(0.85f, 0.8f, 0.95f);
-            l.intensity = 0.7f;
+            l.color = new Color(0.95f, 0.9f, 1f);
+            l.intensity = 1.05f;
             lightGo.transform.rotation = Quaternion.Euler(50f, -30f, 0f);
-            RenderSettings.ambientLight = new Color(0.08f, 0.08f, 0.12f);
+            RenderSettings.ambientLight = new Color(0.18f, 0.18f, 0.23f);
         }
 
         private void EnsureEventSystem()
@@ -253,14 +253,14 @@ namespace Runn.Systems
             var camGo = new GameObject("MainCamera");
             camGo.tag = "MainCamera";
             camGo.transform.SetParent(rigGo.transform, false);
-            camGo.transform.localPosition = new Vector3(0f, 24f, 0f);
-            camGo.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            camGo.transform.localPosition = new Vector3(0f, 10f, -8f);
+            camGo.transform.localRotation = Quaternion.Euler(55f, 0f, 0f);
             var cam = camGo.AddComponent<Camera>();
-            cam.orthographic = true;
-            cam.orthographicSize = GameConstants.PlayerVisibilityRadius;
+            cam.orthographic = false;
+            cam.fieldOfView = 58f;
             cam.nearClipPlane = 0.05f;
             cam.farClipPlane = 80f;
-            cam.backgroundColor = new Color(0.02f, 0.02f, 0.04f);
+            cam.backgroundColor = new Color(0.055f, 0.058f, 0.075f);
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.depth = 0f;
             camGo.AddComponent<AudioListener>();
