@@ -246,24 +246,23 @@ namespace Runn.Systems
 
         private Camera SetupCamera(Transform player)
         {
-            var rigGo = new GameObject("CameraRig");
-            rigGo.transform.SetParent(player, false);
-            rigGo.transform.localPosition = Vector3.zero;
-
             var camGo = new GameObject("MainCamera");
             camGo.tag = "MainCamera";
-            camGo.transform.SetParent(rigGo.transform, false);
-            camGo.transform.localPosition = new Vector3(0f, 10f, -8f);
-            camGo.transform.localRotation = Quaternion.Euler(55f, 0f, 0f);
+            camGo.transform.position = player.position + new Vector3(0f, 15f, -13f);
+            camGo.transform.LookAt(player.position + new Vector3(0f, 0.6f, 4f), Vector3.up);
             var cam = camGo.AddComponent<Camera>();
             cam.orthographic = false;
-            cam.fieldOfView = 58f;
+            cam.fieldOfView = 64f;
             cam.nearClipPlane = 0.05f;
             cam.farClipPlane = 80f;
             cam.backgroundColor = new Color(0.055f, 0.058f, 0.075f);
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.depth = 0f;
             camGo.AddComponent<AudioListener>();
+            var follow = camGo.AddComponent<FollowCamera>();
+            follow.Target = player;
+            follow.Offset = new Vector3(0f, 15f, -13f);
+            follow.LookOffset = new Vector3(0f, 0.6f, 4f);
             return cam;
         }
 
