@@ -1,7 +1,9 @@
 {
   "name": "Runn.EditModeTests",
   "rootNamespace": "Runn.Tests",
-  "references": [],
+  "references": [
+    "Runn"
+  ],
   "includePlatforms": [
     "Editor"
   ],
