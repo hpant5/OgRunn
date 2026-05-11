@@ -1,10 +1,7 @@
 {
   "name": "Runn.EditModeTests",
   "rootNamespace": "Runn.Tests",
-  "references": [
-    "UnityEngine.TestRunner",
-    "UnityEditor.TestRunner"
-  ],
+  "references": [],
   "includePlatforms": [
     "Editor"
   ],
