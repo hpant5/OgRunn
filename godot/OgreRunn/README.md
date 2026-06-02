@@ -1,24 +1,29 @@
-# OgreRunn Godot
+# River Rafting OG
 
-Godot 4.x rebuild of OgreRunn. This starts from the V1 Unity rules and keeps the same text-grid level format.
+Godot 4.x survival rafting prototype.
 
 ## Run
 
 Open this folder in Godot 4.x and run `scenes/main.tscn`.
 
+## Current Game Loop
+
+You wake up in a hilly jungle beside a river. Collect wood and rope from the shore, build a raft at the river edge, ride downstream, repair the raft as it loses health, fish for food, and survive long enough to clear the river.
+
 ## Controls
 
-- `WASD` or arrow keys: move
-- `M`: map reveal
-- `P`: pause
-- `R`: restart level
+- `WASD` or arrow keys: move / steer raft
+- `E`: collect, build raft, board raft, leave raft
+- `Q`: repair raft with 1 wood and 1 rope
+- `F`: fish from river edge or raft
+- `C`: eat fish to restore hunger
+- `R`: restart
 
-## Current Scope
+## Survival Rules
 
-- 5 text maze levels
-- Player movement with wall blocking
-- Bench hiding
-- Gate win condition
-- Ogre patrol/chase/search/lost states
-- Grid pathfinding
-- 2 map reveals per level
+- Hunger starts at 10.
+- Staying in water for more than 10 seconds in one stretch causes an alligator attack and costs 1 hunger.
+- The raft protects you from water attacks, but loses health while moving downstream.
+- Shore hazards can attack when you are away from the water.
+- Fish can restore hunger.
+- Reach the downstream finish zone to clear the level.
