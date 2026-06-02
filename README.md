@@ -1,8 +1,15 @@
-# OgreRunn V1
+# OgreRunn
 
-OgreRunn V1 is an Android-focused 2D top-down maze survival game implemented in Unity. The player starts near the bottom-right of a maze, the ogre starts near the top-left, and the goal is to reach the gate marked `G` before being caught.
+OgreRunn is an Android-focused 2D top-down maze survival game. The player starts near the bottom-right of a maze, the ogre starts near the top-left, and the goal is to reach the gate marked `G` before being caught.
 
-The implementation follows `Ogrerunn V1 Readme.pdf` as the gameplay source of truth. Flutter + Flame was recommended in that document, but Flutter is not installed on this machine and this repository already contains an Android Unity project, so the V1 code lives under `unity/Runn`.
+The original V1 implementation lives under `unity/Runn`. The `version-2` branch starts a Godot rebuild under `godot/OgreRunn` while keeping the same V1 gameplay rules as the source of truth.
+
+## V2 Godot Rebuild
+
+- Godot project path: `godot/OgreRunn`.
+- Target engine: Godot 4.x.
+- First milestone: rebuild the V1 core loop in Godot before adding new mechanics.
+- Current prototype includes text-level loading, grid pathfinding, player movement, ogre AI states, bench hiding, map reveal, level completion, and game-over handling.
 
 ## V1 Scope
 
@@ -23,9 +30,14 @@ The implementation follows `Ogrerunn V1 Readme.pdf` as the gameplay source of tr
 
 ## Repository Layout
 
+- `godot/OgreRunn/` - V2 Godot rebuild.
 - `prototype-web/` - frozen web prototype reference.
 - `unity/Runn/` - V1 Android game implementation.
 - `docs/` - planning and release notes.
+
+## Godot Setup
+
+Open `godot/OgreRunn` in Godot 4.x and run `scenes/main.tscn`.
 
 ## Unity Setup
 

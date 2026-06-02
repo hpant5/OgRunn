@@ -1,0 +1,12 @@
+extends RefCounted
+class_name GameConstants
+
+const PLAYER_SPEED := 192.0
+const OGRE_SPEED := PLAYER_SPEED * 0.8
+const MAP_REVEAL_USES_PER_LEVEL := 2
+const MAP_REVEAL_DURATION_SECONDS := 5.0
+const BENCHES_PER_LEVEL := 2
+const PLAYER_VISIBILITY_RADIUS := 288.0
+const OGRE_DETECTION_RADIUS := 216.0
+const TILE_SIZE := 32.0
+const CATCH_DISTANCE := 18.0
