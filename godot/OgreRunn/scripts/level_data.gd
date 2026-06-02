@@ -1,6 +1,8 @@
 extends RefCounted
 class_name LevelData
 
+const GameConstants = preload("res://scripts/constants.gd")
+
 var width := 0
 var height := 0
 var walkable: Array = []

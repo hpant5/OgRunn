@@ -1,5 +1,11 @@
 extends Node2D
 
+const GameConstants = preload("res://scripts/constants.gd")
+const LevelLoader = preload("res://scripts/level_loader.gd")
+const LevelData = preload("res://scripts/level_data.gd")
+const PlayerController = preload("res://scripts/player.gd")
+const OgreAI = preload("res://scripts/ogre_ai.gd")
+
 enum GameState { MAIN_MENU, LEVEL_START, PLAYING, MAP_REVEAL, PAUSED, LEVEL_COMPLETE, GAME_OVER }
 
 var level_index := 1
@@ -124,7 +130,7 @@ func _toggle_pause() -> void:
 		ogre.frozen = true
 
 func _update_hud() -> void:
-	var state_name := GameState.keys()[state]
+	var state_name: String = str(GameState.keys()[state])
 	var hidden := "hidden" if player != null and player.is_hidden() else "visible"
 	hud.text = "Level %d/%d | Map: %d | %s | Ogre: %s" % [
 		level_index,

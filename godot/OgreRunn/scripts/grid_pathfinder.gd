@@ -1,6 +1,8 @@
 extends RefCounted
 class_name GridPathfinder
 
+const LevelData = preload("res://scripts/level_data.gd")
+
 const DIRECTIONS: Array[Vector2i] = [
 	Vector2i.RIGHT,
 	Vector2i.LEFT,

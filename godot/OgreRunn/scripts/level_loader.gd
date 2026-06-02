@@ -1,6 +1,10 @@
 extends RefCounted
 class_name LevelLoader
 
+const GameConstants = preload("res://scripts/constants.gd")
+const GridPathfinder = preload("res://scripts/grid_pathfinder.gd")
+const LevelData = preload("res://scripts/level_data.gd")
+
 static func load_level(one_based_index: int) -> LevelData:
 	var path := "res://levels/level_%d.txt" % one_based_index
 	var text := FileAccess.get_file_as_string(path)
@@ -31,7 +35,7 @@ static func parse(text: String) -> LevelData:
 		var grid_y := data.height - 1 - row
 		var walkable_row: Array[bool] = []
 		for x in range(width):
-			var marker := "#" if x >= line.length() else line[x]
+			var marker := "#" if x >= line.length() else line.substr(x, 1)
 			var cell := Vector2i(x, grid_y)
 			var can_walk := marker != "#"
 			walkable_row.append(can_walk)

@@ -1,6 +1,9 @@
 extends CharacterBody2D
 class_name PlayerController
 
+const GameConstants = preload("res://scripts/constants.gd")
+const LevelData = preload("res://scripts/level_data.gd")
+
 var level: LevelData
 var game: Node
 var frozen := false

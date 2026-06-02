@@ -1,6 +1,11 @@
 extends CharacterBody2D
 class_name OgreAI
 
+const GameConstants = preload("res://scripts/constants.gd")
+const GridPathfinder = preload("res://scripts/grid_pathfinder.gd")
+const LevelData = preload("res://scripts/level_data.gd")
+const PlayerController = preload("res://scripts/player.gd")
+
 enum OgreState { PATROL, CHASE, SEARCH, LOST }
 
 var level: LevelData
