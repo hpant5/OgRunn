@@ -1,6 +1,7 @@
 extends Node2D
 
 const PlayerController = preload("res://scripts/player.gd")
+const GameSpriteScript = preload("res://scripts/game_sprite.gd")
 
 enum GameState { PLAYING, LEVEL_COMPLETE, GAME_OVER }
 
@@ -31,6 +32,7 @@ var animal_attack_timer := 0.0
 var message_timer := 0.0
 var resource_items: Array[Dictionary] = []
 var animal_positions: Array[Vector2] = []
+var alligator_positions: Array[Vector2] = []
 
 @onready var background := $Background as ColorRect
 @onready var world := $World as Node2D
@@ -80,6 +82,7 @@ func _start_river_level() -> void:
 	animal_attack_timer = 0.0
 	resource_items.clear()
 	animal_positions.clear()
+	alligator_positions.clear()
 
 	background.color = Color(0.09, 0.2, 0.12)
 	_build_world()
@@ -99,6 +102,16 @@ func _build_world() -> void:
 		Rect2(Vector2(720.0, 2160.0), Vector2(310.0, 210.0))
 	]:
 		_add_rect(world, hill.position, hill.size, Color(0.17, 0.34, 0.14), "Hill Forest")
+
+	for pos in [
+		Vector2(70.0, 310.0),
+		Vector2(810.0, 560.0),
+		Vector2(95.0, 1010.0),
+		Vector2(805.0, 1480.0),
+		Vector2(95.0, 2010.0),
+		Vector2(815.0, 2630.0)
+	]:
+		_add_game_sprite(pos, GameSpriteScript.SpriteKind.TREE, 1.2, world, "Tree")
 
 	for item in [
 		{"type": "wood", "pos": Vector2(155.0, 170.0)},
@@ -120,13 +133,21 @@ func _build_world() -> void:
 		Vector2(735.0, 2340.0)
 	]:
 		animal_positions.append(pos)
-		_add_marker(pos, Color(0.75, 0.16, 0.08), "Wild Animal")
+		_add_game_sprite(pos, GameSpriteScript.SpriteKind.ANIMAL, 1.0, world, "Wild Animal")
+
+	for pos in [
+		Vector2(470.0, 760.0),
+		Vector2(430.0, 1690.0),
+		Vector2(510.0, 2500.0)
+	]:
+		alligator_positions.append(pos)
+		_add_game_sprite(pos, GameSpriteScript.SpriteKind.ALLIGATOR, 0.85, world, "Alligator")
 
 func _spawn_player() -> void:
 	player = PlayerController.new()
 	player.init(self, START_POSITION)
 	actors.add_child(player)
-	_add_actor_visual(player, Color(0.96, 0.78, 0.28), "Player")
+	_add_game_sprite(Vector2.ZERO, GameSpriteScript.SpriteKind.PLAYER, 1.0, player, "Player Sprite")
 
 	var camera := Camera2D.new()
 	camera.name = "Camera2D"
@@ -185,9 +206,7 @@ func _try_build_raft() -> void:
 	raft.name = "Raft"
 	raft.global_position = Vector2(clampf(player.global_position.x, RIVER_RECT.position.x + 45.0, RIVER_RECT.end.x - 45.0), player.global_position.y)
 	actors.add_child(raft)
-	raft_visual = _add_actor_visual(raft, Color(0.46, 0.27, 0.11), "Raft")
-	raft_visual.size = Vector2(86.0, 42.0)
-	raft_visual.position = -raft_visual.size * 0.5
+	_add_game_sprite(Vector2.ZERO, GameSpriteScript.SpriteKind.RAFT, 1.0, raft, "Raft Sprite")
 	_show_message("Raft built. Press E nearby to board.", 3.0)
 
 func _toggle_raft_mount() -> void:
@@ -330,24 +349,14 @@ func _add_rect(parent: Node, pos: Vector2, size: Vector2, color: Color, rect_nam
 	return rect
 
 func _add_resource(resource_type: String, pos: Vector2) -> void:
-	var color := Color(0.56, 0.34, 0.14) if resource_type == "wood" else Color(0.76, 0.68, 0.45)
-	var node := _add_marker(pos, color, resource_type.capitalize())
+	var kind := GameSpriteScript.SpriteKind.WOOD if resource_type == "wood" else GameSpriteScript.SpriteKind.ROPE
+	var node := _add_game_sprite(pos, kind, 1.0, world, resource_type.capitalize())
 	resource_items.append({"type": resource_type, "pos": pos, "node": node})
 
-func _add_marker(pos: Vector2, color: Color, marker_name: String) -> ColorRect:
-	var marker := ColorRect.new()
-	marker.name = marker_name
-	marker.color = color
-	marker.size = Vector2(28.0, 28.0)
-	marker.position = pos - marker.size * 0.5
-	world.add_child(marker)
-	return marker
-
-func _add_actor_visual(parent: Node2D, color: Color, visual_name: String) -> ColorRect:
-	var rect := ColorRect.new()
-	rect.name = visual_name
-	rect.color = color
-	rect.size = Vector2(32.0, 32.0)
-	rect.position = -rect.size * 0.5
-	parent.add_child(rect)
-	return rect
+func _add_game_sprite(pos: Vector2, kind: int, sprite_scale: float, parent: Node, sprite_name: String) -> GameSprite:
+	var sprite := GameSprite.new()
+	sprite.name = sprite_name
+	sprite.position = pos
+	sprite.setup(kind, sprite_scale)
+	parent.add_child(sprite)
+	return sprite
